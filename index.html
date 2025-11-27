@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>你的名字 - 插画师个人主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- 手写风英文 + 中文正文字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #fdf7ec;
+            --paper: #fffdf6;
+            --ink: #222222;
+            --accent: #ff8b73;
+            --accent-soft: #ffd36b;
+            --line: rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI",
+            "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: var(--bg);
+            color: var(--ink);
+        }
+
+        .page {
+            min-height: 100vh;
+            padding: 16px 0 32px;
+            /* 轻微的纸张纹理感 */
+            background-image:
+                    radial-gradient(circle at 1px 1px, rgba(0,0,0,0.06) 1px, transparent 0);
+            background-size: 16px 16px;
+        }
+
+        .container {
+            width: min(100% - 32px, 960px);
+            margin: 0 auto;
+        }
+
+        /* 顶部导航：像手绘贴纸条 */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            padding-bottom: 8px;
+        }
+
+        .header-inner {
+            margin: 0 auto;
+            width: min(100% - 32px, 960px);
+            margin-top: 4px;
+            background: var(--paper);
+            border: 2px solid var(--ink);
+            border-radius: 18px;
+            box-shadow: 4px 4px 0 var(--ink);
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-family: "Patrick Hand", system-ui;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .logo-tagline {
+            margin: 0;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .nav {
+            display: flex;
+            gap: 12px;
+            font-size: 14px;
+            font-family: "Patrick Hand", system-ui;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--ink);
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px dashed var(--ink);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .nav a:hover {
+            background: var(--accent-soft);
+        }
+
+        /* Hero 区：自我介绍 + 代表作预览 */
+        .hero {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--paper);
+            border-radius: 22px;
+            border: 2px solid var(--ink);
+            box-shadow: 6px 6px 0 var(--ink);
+        }
+
+        .hero-inner {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .hero-text {
+            flex: 1 1 260px;
+        }
+
+        .hero-hello {
+            font-family: "Patrick Hand", system-ui;
+            font-size: 18px;
+            margin: 0 0 4px;
+        }
+
+        .hero-name {
+            font-family: "Patrick Hand", system-ui;
+            font-size: 40px;
+            margin: 0 0 4px;
+        }
+
+        .hero-role {
+            font-size: 16px;
+            margin: 0 0 12px;
+            color: #555;
+        }
+
+        .hero-desc {
+            margin: 0 0 12px;
+            font-size: 14px;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .hero-tags span {
+            font-size: 12px;
+            border-radius: 999px;
+            border: 1px solid var(--ink);
+            padding: 4px 10px;
+            background: #fff7d1;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            text-decoration: none;
+            border: 2px solid var(--ink);
+            font-family: "Patrick Hand", system-ui;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 3px 3px 0 var(--ink);
+        }
+
+        .btn-primary:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0 var(--ink);
+        }
+
+        .btn-ghost {
+            background: #fff;
+            color: var(--ink);
+        }
+
+        .hero-illustration {
+            flex: 0 0 260px;
+            height: 260px;
+            border-radius: 22px;
+            border: 2px solid var(--ink);
+            box-shadow: 5px 5px 0 var(--ink);
+            background:
+                    linear-gradient(135deg, #ffe7c7, #ffc2d0);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-illustration-note {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            text-align: center;
+            font-size: 14px;
+            font-family: "Patrick Hand", system-ui;
+        }
+
+        /* 这里可以改成你的代表作品封面图
+           比如：
+           .hero-illustration {
+               background-image: url('hero-work.jpg');
+               background-size: cover;
+               background-position: center;
+           }
+        */
+
+        /* 通用 section 卡片 */
+        .section-card {
+            margin-top: 20px;
+            padding: 18px 20px 20px;
+            background: var(--paper);
+            border-radius: 20px;
+            border: 2px solid var(--ink);
+            box-shadow: 5px 5px 0 var(--ink);
+        }
+
+        .section-title {
+            display: inline-block;
+            font-family: "Patrick Hand", system-ui;
+            font-size: 22px;
+            margin: 0 0 10px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            left: 2px;
+            bottom: -4px;
+            width: 80%;
+            height: 6px;
+            background: rgba(255, 219, 128, 0.8);
+            z-index: -1;
+        }
+
+        .section-subtitle {
+            margin: 0 0 12px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .info-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        .info-list li {
+            margin-bottom: 6px;
+        }
+
+        .label {
+            font-weight: 600;
+        }
+
+        /* 作品格子 */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .work-card {
+            background: #fffef7;
+            border-radius: 18px;
+            border: 2px solid var(--ink);
+            box-shadow: 4px 4px 0 var(--ink);
+            padding: 10px 10px 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .work-card:nth-child(2) {
+            transform: rotate(1deg);
+        }
+
+        .work-card:nth-child(3) {
+            transform: rotate(-1deg);
+        }
+
+        .work-thumb {
+            height: 150px;
+            border-radius: 14px;
+            border: 1.5px solid var(--ink);
+            margin-bottom: 8px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #ffe7c7;
+        }
+
+        /* 这里分别代表三张作品图，可以改成自己的图片路径 */
+        .work-thumb-1 {
+            /* 示例：background-image: url('work1.jpg'); */
+            background-image: linear-gradient(135deg, #ffe7c7, #ffc2d0);
+        }
+
+        .work-thumb-2 {
+            /* 示例：background-image: url('work2.jpg'); */
+            background-image: linear-gradient(135deg, #ffd9e3, #d1efff);
+        }
+
+        .work-thumb-3 {
+            /* 示例：background-image: url('work3.jpg'); */
+            background-image: linear-gradient(135deg, #e2f4ff, #fff0c2);
+        }
+
+        .work-title {
+            margin: 0 0 4px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .work-meta {
+            margin: 0 0 4px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .work-desc {
+            margin: 0;
+            font-size: 13px;
+        }
+
+        /* 合作服务列表 */
+        .service-list {
+            margin: 4px 0 0;
+            padding-left: 18px;
+            font-size: 14px;
+        }
+
+        .service-list li {
+            margin-bottom: 4px;
+        }
+
+        /* 联系方式 */
+        .contact-list {
+            list-style: none;
+            margin: 6px 0 8px;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        .contact-list li {
+            margin-bottom: 4px;
+        }
+
+        .contact-list a {
+            color: var(--ink);
+        }
+
+        .contact-list a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-note {
+            font-size: 12px;
+            color: #777;
+            margin-top: 4px;
+        }
+
+        /* 页脚 */
+        .site-footer {
+            margin-top: 24px;
+            font-size: 12px;
+            text-align: center;
+            color: #777;
+        }
+
+        /* 响应式：手机上堆叠排版 */
+        @media (max-width: 700px) {
+            .header-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+
+            .hero-inner {
+                flex-direction: column-reverse;
+            }
+
+            .hero-illustration {
+                align-self: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo-block">
+                <h1 class="logo-name">你的名字</h1>
+                <p class="logo-tagline">Freelance Illustrator · 手绘插画 / 童书 / 商业合作</p>
+            </div>
+            <nav class="nav">
+                <a href="#about">关于</a>
+                <a href="#works">作品</a>
+                <a href="#services">合作</a>
+                <a href="#contact">联系</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 顶部介绍 -->
+        <section class="hero" id="top">
+            <div class="hero-inner">
+                <div class="hero-text">
+                    <p class="hero-hello">你好，我是</p>
+                    <h2 class="hero-name">布洛芬ZO</h2>
+                    <p class="hero-role">插画师 / Illustration Artist</p>
+                    <p class="hero-desc">
+                        擅长xxx风格插画（比如：温柔童趣 / 清爽扁平 / 日系手绘），
+                        主要创作童书插画、商业插画与个人作品集。
+                    </p>
+
+                    <div class="hero-tags">
+                        <span>儿童插画</span>
+                        <span>角色设计</span>
+                        <span>封面插画</span>
+                        <span>专辑 / 海报</span>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#works">查看作品集</a>
+                        <a class="btn btn-ghost" href="#contact">合作联系</a>
+                    </div>
+                </div>
+
+                <div class="hero-illustration" aria-label="插画师代表作预览">
+                    <div class="hero-illustration-note">
+                        在这里放一张你的代表作品封面<br>
+                        （可以用正方形或竖版插画）
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于我 -->
+        <section class="section-card" id="about">
+            <h2 class="section-title">关于我</h2>
+            <p class="section-subtitle">
+                用一小段文字，讲讲你的创作背景和风格。
+            </p>
+            <p>
+                这里可以简单介绍自己，比如：
+                毕业院校 / 专业，插画相关的经历，目前的工作状态（全职 / 自由职业），
+                以及你喜欢画什么样的故事和角色。
+            </p>
+            <ul class="info-list">
+                <li><span class="label">擅长风格：</span>儿童绘本、可爱角色、温暖治愈色彩</li>
+                <li><span class="label">常用工具：</span>Procreate / Photoshop / Clip Studio Paint</li>
+                <li><span class="label">所在城市：</span>例：上海 / 北京 / 成都，可远程合作</li>
+            </ul>
+        </section>
+
+        <!-- 插画作品 -->
+        <section class="section-card" id="works">
+            <h2 class="section-title">插画作品精选</h2>
+            <p class="section-subtitle">
+                建议挑 3–6 幅最能代表你风格的作品放在这里，更多作品可以链接到微博 / 小红书 / Behance 等。
+            </p>
+
+            <div class="works-grid">
+                <article class="work-card">
+                    <div class="work-thumb work-thumb-1"></div>
+                    <h3 class="work-title">作品名称 1</h3>
+                    <p class="work-meta">儿童绘本封面 · 2024</p>
+                    <p class="work-desc">
+                        简短介绍一下这张作品的故事、氛围，或者你想强调的特点。
+                    </p>
+                </article>
+
+                <article class="work-card">
+                    <div class="work-thumb work-thumb-2"></div>
+                    <h3 class="work-title">作品名称 2</h3>
+                    <p class="work-meta">商业插画 · 品牌合作</p>
+                    <p class="work-desc">
+                        可以说明这是给什么类型的品牌或者活动做的插画（不便公开可写行业）。
+                    </p>
+                </article>
+
+                <article class="work-card">
+                    <div class="work-thumb work-thumb-3"></div>
+                    <h3 class="work-title">作品名称 3</h3>
+                    <p class="work-meta">个人系列创作</p>
+                    <p class="work-desc">
+                        用一两句话讲讲个人系列的主题，例如“关于城市里小小动物的日常冒险”。
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <!-- 可提供的合作 -->
+        <section class="section-card" id="services">
+            <h2 class="section-title">我可以帮你画这些</h2>
+            <p class="section-subtitle">
+                清晰写出你愿意接的单，有助于筛选合作需求。
+            </p>
+            <ul class="service-list">
+                <li>儿童图书 / 绘本插画（封面 + 内页）</li>
+                <li>品牌 / 产品商业插画（海报、KV、包装插画）</li>
+                <li>人物 / IP 角色设计与形象延展</li>
+                <li>专辑封面、活动主视觉、宣传插画等</li>
+            </ul>
+        </section>
+
+        <!-- 联系方式 -->
+        <section class="section-card" id="contact">
+            <h2 class="section-title">联系我</h2>
+            <p class="section-subtitle">
+                欢迎发邮件或私信社交平台洽谈合作。
+            </p>
+            <ul class="contact-list">
+                <li>
+                    <span class="label">邮箱：</span>
+                    <a href="mailto:yourmail@example.com">lxin.0310@gmail.com</a>
+                </li>
+                <li>
+                    <span class="label">微博：</span>@你的微博名
+                </li>
+                <li>
+                    <span class="label">小红书：</span>@布洛芬ZO
+                </li>
+                <li>
+                    <span class="label">Instagram：</span>
+                    <a href="https://instagram.com/yourname" target="_blank" rel="noreferrer">
+                        instagram.com/yourname
+                    </a>
+                </li>
+            </ul>
+            <p class="contact-note">
+                建议在来信中简单说明：项目类型 / 大致时间 / 预算区间，
+                方便我更快给出是否合适与排期建议。
+            </p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© <span id="year"></span> 你的名字 · Illustration</p>
+        </div>
+    </footer>
+</div>
+
+<script>
+    // 自动年份
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
